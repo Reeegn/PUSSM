@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "329533199463",
+    "firebase_url": "https://assess-module-default-rtdb.firebaseio.com",
+    "project_id": "assess-module",
+    "storage_bucket": "assess-module.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329533199463:android:932bb06b5a2810331d30c2",
+        "android_client_info": {
+          "package_name": "com.example.phinma_upangstudentsupportmodule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329533199463-622mf1632t2au42ejfeu2mescv5ncvju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.phinma_upangstudentsupportmodule",
+            "certificate_hash": "732f6ad37ffd71cd4296b17fc7195d36465e201f"
+          }
+        },
+        {
+          "client_id": "329533199463-h2ejj7ocbgu0lnlr1bcq4dfdus6l56g7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA2ehD0h57ESy1uAyT7tuzTNVzS_HJopM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329533199463-h2ejj7ocbgu0lnlr1bcq4dfdus6l56g7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
