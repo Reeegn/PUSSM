@@ -96,7 +96,6 @@ public class AssessmentActivity extends AppCompatActivity {
                 //hide dialog
                 progressDialog.hide();
 
-
             }
 
             @Override
