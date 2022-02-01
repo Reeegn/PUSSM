@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_emot_ht.xml" value="0.259963768115942" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_fillit_b.xml" value="0.259963768115942" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_firsttimelogin.xml" value="0.33" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_fp.xml" value="0.18085106382978725" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_guess.xml" value="0.259963768115942" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_health.xml" value="0.2509057971014493" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_main.xml" value="0.35507246376811596" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_ment_ht.xml" value="0.2509057971014493" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_phys_ht.xml" value="0.259963768115942" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_resetpass.xml" value="0.25" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_results_aq.xml" value="0.259963768115942" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_resultsh.xml" value="0.2509057971014493" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_rhyme.xml" value="0.2509057971014493" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_stream.xml" value="0.24048913043478262" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/activity_thinking_lt.xml" value="0.259963768115942" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/reset.xml" value="0.33" />
+        <entry key="..\:/ASprojects/app/src/main/res/layout/toolbar.xml" value="0.35507246376811596" />
+        <entry key="..\:/Users/Arniel C. Fernandez/PUSSM/app/src/main/res/drawable/circle.xml" value="0.3828125" />
+        <entry key="..\:/Users/Arniel C. Fernandez/PUSSM/app/src/main/res/layout/activity_assessment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Arniel C. Fernandez/PUSSM/app/src/main/res/layout/activity_assessment_results.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Arniel C. Fernandez/PUSSM/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

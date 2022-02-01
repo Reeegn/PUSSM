@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -9,34 +10,162 @@
 
     <ImageView
         android:id="@+id/congratulationsIcon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/congratulations"/>
+        android:src="@drawable/congratulations"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar_physical"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.273"
+        tools:progress="30" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_mental"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.273"
+        tools:progress="60" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_overall"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.510"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.531"
+        tools:progress="60" />
+
+    <TextView
+        android:id="@+id/text_view_progress_physical"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_bar_physical"
+        app:layout_constraintEnd_toEndOf="@+id/progress_bar_physical"
+        app:layout_constraintStart_toStartOf="@+id/progress_bar_physical"
+        app:layout_constraintTop_toTopOf="@+id/progress_bar_physical"
+        tools:text="30%" />
+
+    <TextView
+        android:id="@+id/text_view_progress_mental"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_bar_mental"
+        app:layout_constraintEnd_toEndOf="@+id/progress_bar_mental"
+        app:layout_constraintStart_toStartOf="@+id/progress_bar_mental"
+        app:layout_constraintTop_toTopOf="@+id/progress_bar_mental"
+        tools:text="60%" />
+
+    <TextView
+        android:id="@+id/text_view_progress_overall"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_bar_overall"
+        app:layout_constraintEnd_toEndOf="@+id/progress_bar_overall"
+        app:layout_constraintStart_toStartOf="@+id/progress_bar_overall"
+        app:layout_constraintTop_toTopOf="@+id/progress_bar_overall"
+        tools:text="60%" />
+
+    <TextView
+        android:id="@+id/physical_text"
+        android:layout_width="113dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="Physical"
+        android:textColor="#77801b"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar_physical"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/Mental_text"
+        android:layout_width="113dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="Mental"
+        android:textColor="#77801b"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.880"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar_mental"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/Overall_text"
+        android:layout_width="113dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:text="Over all"
+        android:textColor="#77801b"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar_overall"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/successTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:layout_below="@id/congratulationsIcon"
         android:text="You've successfully completed the assessment"
         android:textColor="#FFFFFF"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:textSize="16sp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/congratulationsIcon" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startNewAssessmentBtn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="374dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_back_gold20"
         android:text="Start New Assessment"
         android:textColor="#FFFFFF"
-        android:background="@drawable/round_back_gold20"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
