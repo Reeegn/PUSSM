@@ -111,5 +111,14 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:background="@drawable/round_back_gold20"/>
+    
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nav_bar"
+        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector"
+        app:menu="@menu/menu_navigation"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
