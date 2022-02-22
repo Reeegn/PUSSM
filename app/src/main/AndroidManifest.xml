@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PHINMAUPangStudentSupportModule">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".Login">
             <intent-filter>
