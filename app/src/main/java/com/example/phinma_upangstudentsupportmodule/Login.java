@@ -5,73 +5,76 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://assess-module-default-rtdb.firebaseio.com/");
+    private EditText editTextStudentEmail, editTextPassword;
+    private Button loginBtn;
+
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText studentNumber = findViewById(R.id.studentNumber);
-        final EditText password = findViewById(R.id.password);
-        final Button loginBtn = findViewById(R.id.loginBtn);
+        loginBtn = (Button) findViewById(R.id.loginBtn);
+
+        editTextStudentEmail = (EditText) findViewById(R.id.studentEmail);
+        editTextPassword = (EditText) findViewById(R.id.password);
+
+        mAuth = FirebaseAuth.getInstance();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                String email = editTextStudentEmail.getText().toString().trim();
+                String password = editTextPassword.getText().toString().trim();
 
-                final String studentNumberTxt = studentNumber.getText().toString();
-                final String passwordTxt = password.getText().toString();
-
-                if(studentNumberTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    Toast.makeText(Login.this, "Please enter your student number or password", Toast.LENGTH_SHORT).show();
+                if(email.isEmpty()){
+                    editTextStudentEmail.setError("Email is required!");
+                    editTextStudentEmail.requestFocus();
+                    return;
                 }
-                else {
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            //check if student number exists in Firebase Database
-                            if (snapshot.hasChild(studentNumberTxt)) {
-
-                                //student number exists in Firebase Database
-                                //get password of user in Firebase Database and match it with user input
-                                final String getPassword = snapshot.child(studentNumberTxt).child("password").getValue(String.class);
-
-                                if (getPassword.equals(passwordTxt)){
-                                    Toast.makeText(Login.this, "Successfully Logged In", Toast.LENGTH_SHORT).show();
-
-                                    //open MainActivity on success
-                                    startActivity(new Intent(Login.this, MainActivity.class));
-                                    finish();
-                                }
-                                else{
-                                    Toast.makeText(Login.this, "Wrong Credentials!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            else {
-                                Toast.makeText(Login.this, "Wrong Credentials!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    editTextStudentEmail.setError("Please enter a valid email address!");
+                    editTextStudentEmail.requestFocus();
+                    return;
                 }
+
+                if (password.isEmpty()){
+                    editTextPassword.setError("Password is required!");
+                    editTextPassword.requestFocus();
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()){
+                            Toast.makeText(Login.this, "Successfully Logged In", Toast.LENGTH_SHORT).show();
+
+                            //redirect to user profile
+                            startActivity(new Intent(Login.this, MainActivity.class));
+                            finish();
+
+                        }else{
+                            Toast.makeText(Login.this, "Wrong credentials!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
     }
