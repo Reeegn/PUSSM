@@ -9,15 +9,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     private String selectedTestName = "";
 
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +41,33 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayout physical = findViewById(R.id.physicalLayout);
         final LinearLayout mental = findViewById(R.id.mentalLayout);
         final Button startBtn = findViewById(R.id.startAssessmentBtn);
+
+        //initialize firebase variables to get name
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("users");
+        userID = user.getUid();
+
+        //Welcome message
+        final TextView welcomeMessageTextView = (TextView) findViewById(R.id.welcomeMessage);
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+
+                if (userProfile != null){
+                    String firstName = userProfile.firstname;
+
+                    welcomeMessageTextView.setText("Welcome " + firstName + "!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         physical.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +132,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.dashboard:
                         return true;
                     case R.id.history:
+                        finish();
                         startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.profile:
+                        finish();
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0,0);
                         return true;
