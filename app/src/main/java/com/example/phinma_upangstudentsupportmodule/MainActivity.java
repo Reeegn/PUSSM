@@ -132,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.dashboard:
                         return true;
                     case R.id.history:
-                        finish();
                         startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.profile:
-                        finish();
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
                 }

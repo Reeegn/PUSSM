@@ -29,15 +29,15 @@ public class HistoryActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.dashboard:
-                        finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.history:
                         return true;
                     case R.id.profile:
-                        finish();
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
                 }

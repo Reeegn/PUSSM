@@ -1,19 +1,27 @@
 package com.example.phinma_upangstudentsupportmodule;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private String userID;
     private Button logout;
+    private Button changePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         final TextInputEditText departmentTextView = (TextInputEditText) findViewById(R.id.department);
 
         logout = (Button) findViewById(R.id.logout);
+        changePassword = (Button) findViewById(R.id.change_password);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -80,6 +90,69 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
+
+                EditText currentPasswordEt = (EditText) mView.findViewById(R.id.current_password);
+                EditText newPasswordEt = (EditText) mView.findViewById(R.id.new_password);
+                Button changePasswordBtn = (Button) mView.findViewById(R.id.change_password);
+
+                builder.setView(mView);
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String currentPassword = currentPasswordEt.getText().toString().trim();
+                        String newPassword = newPasswordEt.getText().toString().trim();
+
+                        if (TextUtils.isEmpty(currentPassword)) {
+                            Toast.makeText(ProfileActivity.this, "Enter your current password", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (newPassword.length()<6){
+                            Toast.makeText(ProfileActivity.this, "New password length must be atleast 6 characters", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        updatePassword(currentPassword, newPassword);
+                    }
+
+                    private void updatePassword(String currentPassword, String newPassword) {
+                        //before changing the password, re-authenticate user
+                        AuthCredential authCredential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
+                        user.reauthenticate(authCredential).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //successfully authenticated, begin update
+                                user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(ProfileActivity.this, "Password Updated", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(ProfileActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ProfileActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,8 +161,6 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
@@ -103,13 +174,13 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.dashboard:
-                        finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.history:
-                        finish();
                         startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+                        finish();
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.profile:
