@@ -7,8 +7,13 @@
         android:icon="@drawable/ic_baseline_dashboard_24" />
 
     <item
+        android:id="@+id/assessment"
+        android:title="Assessment"
+        android:icon="@drawable/ic_baseline_assignment_24" />
+
+    <item
         android:id="@+id/history"
-        android:title="Assessment History"
+        android:title="History"
         android:icon="@drawable/ic_baseline_history_24" />
 
     <item

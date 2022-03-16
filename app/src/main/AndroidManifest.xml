@@ -11,16 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PHINMAUPangStudentSupportModule">
-        <activity android:name=".ForgotPassword"></activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".Login">
+        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".AssessmentScreenActivity" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".Login" />
         <activity android:name=".AssessmentResults" />
         <activity android:name=".AssessmentActivity" />
         <activity android:name=".MainActivity" />

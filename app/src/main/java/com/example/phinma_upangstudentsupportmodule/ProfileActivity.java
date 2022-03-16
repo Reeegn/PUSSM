@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -37,6 +42,10 @@ public class ProfileActivity extends AppCompatActivity {
     private String userID;
     private Button logout;
     private Button changePassword;
+    private Button update;
+    private ImageView profile_picture;
+
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         //initialize firebase variables to get name
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("users");
+        storageReference = FirebaseStorage.getInstance().getReference();
         userID = user.getUid();
 
         //Welcome message
@@ -58,6 +68,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         logout = (Button) findViewById(R.id.logout);
         changePassword = (Button) findViewById(R.id.change_password);
+        update = (Button) findViewById(R.id.edit_info);
+        profile_picture = (ImageView) findViewById(R.id.profile_picture);
+
+        StorageReference profileRef = storageReference.child("profileImages")
+                .child(userID)
+                .child("profile.jpg");
+
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profile_picture);
+            }
+        });
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,6 +113,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+            }
+        });
+
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 EditText currentPasswordEt = (EditText) mView.findViewById(R.id.current_password);
                 EditText newPasswordEt = (EditText) mView.findViewById(R.id.new_password);
+                EditText confirmNewPasswordEt = (EditText) mView.findViewById(R.id.confirm_new_password);
                 Button changePasswordBtn = (Button) mView.findViewById(R.id.change_password);
 
                 builder.setView(mView);
@@ -109,17 +140,27 @@ public class ProfileActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String currentPassword = currentPasswordEt.getText().toString().trim();
                         String newPassword = newPasswordEt.getText().toString().trim();
+                        String confirmNewPassword = confirmNewPasswordEt.getText().toString().trim();
 
                         if (TextUtils.isEmpty(currentPassword)) {
-                            Toast.makeText(ProfileActivity.this, "Enter your current password", Toast.LENGTH_SHORT).show();
+                            currentPasswordEt.setError("Enter your current password");
+                            currentPasswordEt.requestFocus();
                             return;
                         }
                         if (newPassword.length()<6){
-                            Toast.makeText(ProfileActivity.this, "New password length must be atleast 6 characters", Toast.LENGTH_SHORT).show();
+                            newPasswordEt.setError("New password length must be atleast 6 characters");
+                            newPasswordEt.requestFocus();
                             return;
                         }
-
-                        updatePassword(currentPassword, newPassword);
+                        if (newPassword.equals(confirmNewPassword)) {
+                            updatePassword(currentPassword, newPassword);
+                        } else {
+                            newPasswordEt.setError("Passwords do not match!");
+                            confirmNewPasswordEt.setError("Passwords do not match!");
+                            newPasswordEt.requestFocus();
+                            confirmNewPasswordEt.requestFocus();
+                            return;
+                        }
                     }
 
                     private void updatePassword(String currentPassword, String newPassword) {
@@ -175,6 +216,11 @@ public class ProfileActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.dashboard:
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.assessment:
+                        startActivity(new Intent(getApplicationContext(), AssessmentScreenActivity.class));
                         finish();
                         overridePendingTransition(0,0);
                         return true;

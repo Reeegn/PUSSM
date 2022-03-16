@@ -33,6 +33,11 @@ public class HistoryActivity extends AppCompatActivity {
                         finish();
                         overridePendingTransition(0,0);
                         return true;
+                    case R.id.assessment:
+                        startActivity(new Intent(getApplicationContext(), AssessmentScreenActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return true;
                     case R.id.history:
                         return true;
                     case R.id.profile:

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/assessmentbg"
-    tools:context=".HistoryActivity">
+    tools:context=".AssessmentScreenActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/dashboard_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="History"
+            android:text="Assessment"
             android:fontFamily="@font/bebas"
             android:textSize="30dp"
             android:textColor="#fff"

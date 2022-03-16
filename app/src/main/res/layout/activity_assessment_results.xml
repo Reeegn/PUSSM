@@ -17,7 +17,8 @@
         android:adjustViewBounds="true"
         android:src="@drawable/congratulations"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="152dp" />
 
 
     <ProgressBar
@@ -162,10 +163,11 @@
         android:layout_height="51dp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/round_back_gold20"
+        android:background="@drawable/round_back_gold"
         android:text="Start New Assessment"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

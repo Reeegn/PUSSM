@@ -5,112 +5,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@drawable/dashboardbg"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/appName"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:adjustViewBounds="true"
-        android:layout_marginStart="130dp"
-        android:layout_marginEnd="130dp"
-        android:src="@drawable/man"
-        />
+        android:paddingTop="30dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
 
-    <TextView
-        android:id="@+id/welcomeMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appName"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:textColor="#99FFFFFF"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="20dp" />
+        <TextView
+            android:id="@+id/dashboard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dashboard"
+            android:fontFamily="@font/bebas"
+            android:textSize="30dp"
+            android:textColor="#fff"
+            />
+
+        <TextView
+            android:id="@+id/t1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dashboard_title"
+            android:paddingTop="20dp"
+            android:text="Welcome Back,"
+            android:textSize="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/welcomeMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:layout_below="@id/t1"
+            android:textColor="#fff"
+            android:textSize="28dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/man"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"/>
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/welcomeMessage"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:weightSum="2">
+        android:orientation="vertical"
+        android:paddingLeft="25dp"
+        android:layout_marginTop="240dp">
 
-        <LinearLayout
-            android:id="@+id/physicalLayout"
-            android:layout_width="60dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="20dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/round_back_white10"
-            android:orientation="vertical"
-            android:layout_marginRight="5dp">
+            android:text="Your Recent Assessment"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#000" />
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/muscles"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="PHYSICAL TEST"
-                android:textColor="#b2952f"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mentalLayout"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="20dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/round_back_white10"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/brain"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="MENTAL TEST"
-                android:textColor="#b2952f"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/startAssessmentBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start Assessment"
-        android:layout_below="@id/layout"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:background="@drawable/round_back_gold20"/>
-    
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
