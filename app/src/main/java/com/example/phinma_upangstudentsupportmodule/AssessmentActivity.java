@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,17 +46,27 @@ public class AssessmentActivity extends AppCompatActivity {
     //selectedOption's value. If user not selected any option yet then it is empty by default
     private String selectedOptionByUser = "";
 
+    //background music
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment);
 
+        //for animated background
         LinearLayout linearLayout = findViewById(R.id.mainLayout);
 
         AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2500);
         animationDrawable.setExitFadeDuration(5000);
         animationDrawable.start();
+
+        //for background music
+        mediaPlayer = MediaPlayer.create(AssessmentActivity.this, R.raw.music);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+
 
         //Initialize widgets from activity_main.xml file
         final ImageView backBtn = findViewById(R.id.backBtn);
@@ -227,6 +238,25 @@ public class AssessmentActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
     @Override
