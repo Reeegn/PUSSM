@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ProfileActivity"
-    android:background="@drawable/dashboardbg">
+    android:background="@drawable/dashboard_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"

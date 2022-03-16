@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#0D1F6BB8"
+    android:background="@drawable/gradient_list"
+    android:id="@+id/mainLayout"
     tools:context=".AssessmentActivity">
 
     <RelativeLayout
@@ -40,7 +41,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:background="@drawable/round_back_white10"
+        android:background="@drawable/round_back_black_stroke"
         android:elevation="1dp"
         android:gravity="center"
         android:paddingStart="15dp"

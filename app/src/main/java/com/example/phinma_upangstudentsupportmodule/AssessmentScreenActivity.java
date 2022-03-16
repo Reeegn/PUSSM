@@ -24,7 +24,7 @@ public class AssessmentScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_screen);
 
-        /*
+
         //initialize widgets from activity_main.xml
         final LinearLayout physical = findViewById(R.id.physicalLayout);
         final LinearLayout mental = findViewById(R.id.mentalLayout);
@@ -40,7 +40,7 @@ public class AssessmentScreenActivity extends AppCompatActivity {
                 //select physical layout
                 physical.setBackgroundResource(R.drawable.round_back_gold_stroke);
                 //de-select other layout
-                mental.setBackgroundResource(R.drawable.round_back_white10);
+                mental.setBackgroundResource(R.drawable.round_back_black_stroke);
             }
         });
 
@@ -54,18 +54,18 @@ public class AssessmentScreenActivity extends AppCompatActivity {
                 //select mental layout
                 mental.setBackgroundResource(R.drawable.round_back_gold_stroke);
                 //de-select other layout
-                physical.setBackgroundResource(R.drawable.round_back_white10);
+                physical.setBackgroundResource(R.drawable.round_back_black_stroke);
             }
         });
 
-         */
-        /*
+
+
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 /* if user has not selected any topic yet then show a Toast message
-                selectedTestName will be empty or default value ("") if user has not selected any topic yet
+                selectedTestName will be empty or default value ("") if user has not selected any topic yet */
                 if(selectedTestName.isEmpty()){
                     Toast.makeText(AssessmentScreenActivity.this, "Please select assessment", Toast.LENGTH_SHORT).show();
                 }
@@ -80,7 +80,6 @@ public class AssessmentScreenActivity extends AppCompatActivity {
                 }
             }
         });
-        */
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);
