@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PHINMAUPangStudentSupportModule">
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditProfileActivity"></activity>
         <activity android:name=".AssessmentScreenActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>

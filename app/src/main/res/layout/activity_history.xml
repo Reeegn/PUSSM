@@ -8,52 +8,24 @@
     android:background="@drawable/assessment_bg"
     tools:context=".HistoryActivity">
 
-    <LinearLayout
-        android:id="@+id/historyTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="30dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:id="@+id/dashboard_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Assessment History"
-                android:fontFamily="@font/bebas"
-                android:textSize="30dp"
-                android:textColor="#fff"
-                />
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="25dp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/historyTitle"
-        android:orientation="vertical">
+        android:paddingTop="30dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/historyList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/historyTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/dashboard_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:fontFamily="@font/bebas"
+            android:textSize="30dp"
+            android:textColor="#fff"
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

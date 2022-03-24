@@ -2,24 +2,6 @@ package com.example.phinma_upangstudentsupportmodule;
 
 public class User {
 
-    String date, mental, physical, overall;
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getMental() {
-        return mental;
-    }
-
-    public String getPhysical() {
-        return physical;
-    }
-
-    public String getOverall() {
-        return overall;
-    }
-
     public String idnumber, firstname, middlename, lastname, section, email, contact, department;
 
     public User(){
