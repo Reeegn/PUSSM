@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +29,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
     private ImageView profile_picture;
+    private ArrayList<User> list;
 
     StorageReference storageReference;
 
@@ -86,6 +90,44 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        final TextView textview_date = (TextView) findViewById(R.id.dashboard_date);
+        final TextView textview_physical = (TextView) findViewById(R.id.tv_progress_physical);
+        final TextView textview_mental = (TextView) findViewById(R.id.tv_progress_mental);
+        final TextView textview_overall = (TextView) findViewById(R.id.tv_progress_overall);
+        final ProgressBar progress_physical = (ProgressBar) findViewById(R.id.pb_physical);
+        final ProgressBar progress_mental = (ProgressBar) findViewById(R.id.pb_mental);
+        final ProgressBar progress_overall = (ProgressBar) findViewById(R.id.pb_overall);
+
+        DatabaseReference result_ref = FirebaseDatabase.getInstance().getReference("users").child(userID).child("result");
+
+        result_ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for (DataSnapshot snapshot : datasnapshot.getChildren()){
+                    String date = snapshot.child("date").getValue().toString();
+                    String mental = snapshot.child("mental").getValue().toString();
+                    String physical = snapshot.child("physical").getValue().toString();
+                    String overall = snapshot.child("overall").getValue().toString();
+
+                    textview_date.setText(date);
+                    textview_mental.setText(mental);
+                    textview_physical.setText(physical);
+                    textview_overall.setText(overall);
+                    progress_mental.setProgress(Integer.parseInt(mental));
+                    progress_physical.setProgress(Integer.parseInt(physical));
+                    progress_overall.setProgress(Integer.parseInt(overall));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_bar);

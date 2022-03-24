@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="25dp"
+        android:paddingRight="25dp"
         android:layout_marginTop="240dp">
 
         <TextView
@@ -70,6 +71,142 @@
             android:textStyle="bold"
             android:fontFamily="sans-serif-black"
             android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/dashboard_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#000" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+            <ProgressBar
+                android:id="@+id/pb_physical"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:progress="30" />
+
+            <ProgressBar
+                android:id="@+id/pb_mental"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:progress="60" />
+
+            <ProgressBar
+                android:id="@+id/pb_overall"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginRight="13dp"
+                app:layout_constraintEnd_toStartOf="@+id/mental_text"
+                app:layout_constraintStart_toEndOf="@+id/physical_text"
+                app:layout_constraintTop_toBottomOf="@+id/pb_physical"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/tv_progress_physical"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@+id/pb_physical"
+                app:layout_constraintEnd_toEndOf="@+id/pb_physical"
+                app:layout_constraintStart_toStartOf="@+id/pb_physical"
+                app:layout_constraintTop_toTopOf="@+id/pb_physical"
+                tools:text="30%" />
+
+            <TextView
+                android:id="@+id/tv_progress_mental"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@+id/pb_mental"
+                app:layout_constraintEnd_toEndOf="@+id/pb_mental"
+                app:layout_constraintStart_toStartOf="@+id/pb_mental"
+                app:layout_constraintTop_toTopOf="@+id/pb_mental"
+                tools:text="60%" />
+
+            <TextView
+                android:id="@+id/tv_progress_overall"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintBottom_toBottomOf="@+id/pb_overall"
+                app:layout_constraintEnd_toEndOf="@+id/pb_overall"
+                app:layout_constraintStart_toStartOf="@+id/pb_overall"
+                app:layout_constraintTop_toTopOf="@+id/pb_overall"
+                tools:text="60%" />
+
+            <TextView
+                android:id="@+id/physical_text"
+                android:layout_width="113dp"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:text="Physical"
+                android:textColor="#77801b"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pb_physical"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/mental_text"
+                android:layout_width="113dp"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:text="Mental"
+                android:textColor="#77801b"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.880"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pb_mental"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/overall_text"
+                android:layout_width="113dp"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:text="Overall"
+                android:textColor="#77801b"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pb_overall"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
