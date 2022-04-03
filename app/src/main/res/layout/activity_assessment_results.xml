@@ -5,7 +5,8 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1c5949"
+    android:background="@drawable/login_bg"
+    android:paddingTop="50dp"
     tools:context=".AssessmentResults">
 
     <ImageView
@@ -32,7 +33,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.273"
-        tools:progress="30" />
+        android:progress="30" />
 
     <ProgressBar
         android:id="@+id/progress_bar_mental"
@@ -45,7 +46,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.273"
-        tools:progress="60" />
+        android:progress="60" />
 
     <ProgressBar
         android:id="@+id/progress_bar_overall"
@@ -58,7 +59,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.531"
-        tools:progress="60" />
+        android:progress="45" />
 
     <TextView
         android:id="@+id/text_view_progress_physical"
@@ -70,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_bar_physical"
         app:layout_constraintStart_toStartOf="@+id/progress_bar_physical"
         app:layout_constraintTop_toTopOf="@+id/progress_bar_physical"
-        tools:text="30%" />
+        android:text="30%" />
 
     <TextView
         android:id="@+id/text_view_progress_mental"
@@ -82,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_bar_mental"
         app:layout_constraintStart_toStartOf="@+id/progress_bar_mental"
         app:layout_constraintTop_toTopOf="@+id/progress_bar_mental"
-        tools:text="60%" />
+        android:text="60%" />
 
     <TextView
         android:id="@+id/text_view_progress_overall"
@@ -94,7 +95,7 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_bar_overall"
         app:layout_constraintStart_toStartOf="@+id/progress_bar_overall"
         app:layout_constraintTop_toTopOf="@+id/progress_bar_overall"
-        tools:text="60%" />
+        android:text="45%" />
 
     <TextView
         android:id="@+id/physical_text"
@@ -133,7 +134,7 @@
         android:layout_width="113dp"
         android:layout_height="28dp"
         android:gravity="center"
-        android:text="Over all"
+        android:text="Overall"
         android:textColor="#77801b"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -150,8 +151,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="You've successfully completed the assessment"
-        android:textColor="#FFFFFF"
+        android:text="You've successfully completed the assessment!"
+        android:textColor="#000"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,9 +163,9 @@
         android:layout_width="374dp"
         android:layout_height="51dp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/round_back_gold"
-        android:text="Start New Assessment"
+        android:text="Hooray!"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

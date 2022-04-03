@@ -110,10 +110,14 @@ public class MainActivity extends AppCompatActivity {
                     String physical = snapshot.child("physical").getValue().toString();
                     String overall = snapshot.child("overall").getValue().toString();
 
+                    String fMental = mental + "%";
+                    String fPhysical = physical + "%";
+                    String fOverall = overall + "%";
+
                     textview_date.setText(date);
-                    textview_mental.setText(mental);
-                    textview_physical.setText(physical);
-                    textview_overall.setText(overall);
+                    textview_mental.setText(fMental);
+                    textview_physical.setText(fPhysical);
+                    textview_overall.setText(fOverall);
                     progress_mental.setProgress(Integer.parseInt(mental));
                     progress_physical.setProgress(Integer.parseInt(physical));
                     progress_overall.setProgress(Integer.parseInt(overall));

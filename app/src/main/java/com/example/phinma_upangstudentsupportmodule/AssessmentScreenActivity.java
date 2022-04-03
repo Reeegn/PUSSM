@@ -26,10 +26,14 @@ public class AssessmentScreenActivity extends AppCompatActivity {
 
 
         //initialize widgets from activity_main.xml
+        /*
         final LinearLayout physical = findViewById(R.id.physicalLayout);
         final LinearLayout mental = findViewById(R.id.mentalLayout);
+
+         */
         final Button startBtn = findViewById(R.id.startAssessmentBtn);
 
+        /*
         physical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,11 +62,14 @@ public class AssessmentScreenActivity extends AppCompatActivity {
             }
         });
 
+         */
 
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                selectedTestName = "physical";
 
                 /* if user has not selected any topic yet then show a Toast message
                 selectedTestName will be empty or default value ("") if user has not selected any topic yet */

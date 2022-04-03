@@ -19,7 +19,7 @@ public class AssessmentResults extends AppCompatActivity {
         startNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AssessmentResults.this, MainActivity.class));
+                startActivity(new Intent(AssessmentResults.this, AssessmentScreenActivity.class));
                 finish();
             }
         });
@@ -27,7 +27,7 @@ public class AssessmentResults extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AssessmentResults.this, MainActivity.class));
+        startActivity(new Intent(AssessmentResults.this, AssessmentScreenActivity.class));
         finish();
     }
 }
