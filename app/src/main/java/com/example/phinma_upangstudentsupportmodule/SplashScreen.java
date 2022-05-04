@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -13,15 +16,16 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN = 4500;
-
     Animation topAnim, bottomAnim;
     ImageView logo;
     TextView name, name2;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +48,20 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, Login.class);
-                Pair[] pairs = new Pair[2];
-                pairs[0] = new Pair<View, String>(logo, "logo_image");
-                pairs[1] = new Pair<View, String>(name, "logo_text");
-
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this, pairs);
-                    startActivity(intent, options.toBundle());
-                }
+                progressDialog = ProgressDialog.show(SplashScreen.this, null, null);
+                progressDialog.setContentView(new ProgressBar(SplashScreen.this));
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             }
-        }, SPLASH_SCREEN);
+        }, 4000);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                progressDialog.dismiss();
+                startActivity(new Intent(SplashScreen.this, Login.class));
                 finish();
             }
-        }, 20000);
+        }, 10000);
     }
 }

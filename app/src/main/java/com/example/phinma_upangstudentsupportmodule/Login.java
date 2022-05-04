@@ -3,13 +3,17 @@ package com.example.phinma_upangstudentsupportmodule;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,7 @@ public class Login extends AppCompatActivity {
     private Button loginBtn;
 
     private FirebaseAuth mAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +49,30 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                progressDialog = ProgressDialog.show(Login.this, null, null);
+                progressDialog.setContentView(new ProgressBar(Login.this));
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                 String email = editTextStudentEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
 
                 if(email.isEmpty()){
+                    progressDialog.dismiss();
                     editTextStudentEmail.setError("Email is required!");
                     editTextStudentEmail.requestFocus();
                     return;
                 }
 
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    progressDialog.dismiss();
                     editTextStudentEmail.setError("Please enter a valid email address!");
                     editTextStudentEmail.requestFocus();
                     return;
                 }
 
                 if (password.isEmpty()){
+                    progressDialog.dismiss();
                     editTextPassword.setError("Password is required!");
                     editTextPassword.requestFocus();
                     return;
@@ -70,6 +83,7 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
+                            progressDialog.dismiss();
                             Toast.makeText(Login.this, "Successfully Logged In", Toast.LENGTH_SHORT).show();
 
                             //redirect to user profile
@@ -77,6 +91,7 @@ public class Login extends AppCompatActivity {
                             finish();
 
                         }else{
+                            progressDialog.dismiss();
                             Toast.makeText(Login.this, "Wrong credentials!", Toast.LENGTH_LONG).show();
                         }
                     }
