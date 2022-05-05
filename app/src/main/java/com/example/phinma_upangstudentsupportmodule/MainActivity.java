@@ -3,7 +3,10 @@ package com.example.phinma_upangstudentsupportmodule;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -41,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
     StorageReference storageReference;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*
 
-         */
+        progressDialog = ProgressDialog.show(MainActivity.this, null, null);
+        progressDialog.setContentView(new ProgressBar(MainActivity.this));
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //initialize firebase variables to get name
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -64,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+
                 Picasso.get().load(uri).into(profile_picture);
+                progressDialog.dismiss();
             }
         });
 
@@ -104,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         result_ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     String date = snapshot.child("date").getValue().toString();
                     String mental = snapshot.child("mental").getValue().toString();

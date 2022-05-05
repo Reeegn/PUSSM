@@ -5,8 +5,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,11 +52,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
     StorageReference storageReference;
 
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        progressDialog = ProgressDialog.show(EditProfileActivity.this, null, null);
+        progressDialog.setContentView(new ProgressBar(EditProfileActivity.this));
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //initialize firebase variables to get name
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -68,6 +77,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(profilePicture);
+                progressDialog.dismiss();
             }
         });
 
@@ -145,6 +155,11 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
+
+        progressDialog = ProgressDialog.show(EditProfileActivity.this, null, null);
+        progressDialog.setContentView(new ProgressBar(EditProfileActivity.this));
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         StorageReference fileRef = storageReference.child("profileImages")
                 .child(userID)
                 .child("profile.jpg");
@@ -155,6 +170,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Picasso.get().load(uri).into(profilePicture);
+                        progressDialog.dismiss();
                     }
                 });
             }
@@ -162,7 +178,14 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(EditProfileActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
     }
 }

@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -31,10 +35,17 @@ public class HistoryActivity extends AppCompatActivity {
     FirebaseUser user;
     String userID;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        progressDialog = ProgressDialog.show(HistoryActivity.this, null, null);
+        progressDialog.setContentView(new ProgressBar(HistoryActivity.this));
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
@@ -61,7 +72,7 @@ public class HistoryActivity extends AppCompatActivity {
                 }
                 myAdapter.notifyDataSetChanged();
                 Collections.reverse(list);
-
+                progressDialog.dismiss();
             }
 
             @Override
