@@ -127,7 +127,11 @@ public class EditProfileActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String contact = contactNumberTextView.getText().toString();
+                reference.child(userID).child("contact").setValue(contact);
+                Toast.makeText(EditProfileActivity.this, "Data has been updated", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+                finish();
             }
         });
 
@@ -170,6 +174,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Picasso.get().load(uri).into(profilePicture);
+                        Toast.makeText(EditProfileActivity.this, "Picture has been updated", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 });
