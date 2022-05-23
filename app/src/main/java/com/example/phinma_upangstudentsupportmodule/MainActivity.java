@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,14 +36,16 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference reference, rootReference;
     private String userID;
     private ImageView profile_picture;
     private ArrayList<User> list;
+    String AY;
 
     StorageReference storageReference;
 
@@ -51,30 +56,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressDialog = ProgressDialog.show(MainActivity.this, null, null);
-        progressDialog.setContentView(new ProgressBar(MainActivity.this));
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        progressDialog = ProgressDialog.show(MainActivity.this, null, null);
+//        progressDialog.setContentView(new ProgressBar(MainActivity.this));
+//        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //initialize firebase variables to get name
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("users");
+        rootReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
         userID = user.getUid();
 
         profile_picture = (ImageView) findViewById(R.id.profile_picture);
 
-        StorageReference profileRef = storageReference.child("profileImages")
-                .child(userID)
-                .child("profile.jpg");
-
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-
-                Picasso.get().load(uri).into(profile_picture);
-                progressDialog.dismiss();
-            }
-        });
+//        StorageReference profileRef = storageReference.child("profileImages")
+//                .child(userID)
+//                .child("profile.jpg");
+//
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//
+//                Picasso.get().load(uri).into(profile_picture);
+//                progressDialog.dismiss();
+//            }
+//        });
 
 
         //Welcome message
@@ -96,6 +102,37 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
 
+            }
+        });
+
+        rootReference.child("system/current").get().addOnCompleteListener(task -> {
+            if(task.isComplete()) {
+                AY = task.getResult().getValue().toString();
+                rootReference.child("data/"+AY+"/student/"+userID).get().addOnCompleteListener(task1 -> {
+                    if(task.isComplete()) {
+                        if (task.getResult().child("subject").exists()) {
+                            String subj = task.getResult().child("subject").getValue().toString();
+                            String sect = task.getResult().child("section").getValue().toString();
+
+                            Log.d("HELP ME", subj + sect);
+
+//                        TODO: Check if result pool is ok or needs plural.
+                            rootReference.child("data/" + AY + "/studentList/" + subj + "/" + sect + "/" + userID + "/result").limitToLast(1).get().addOnCompleteListener(task2 -> {
+                                if (task.isComplete()) {
+                                    if (task.getResult().exists()) {
+                                        HashMap<String, String> result = (HashMap<String, String>) task.getResult().getChildren();
+                                        result.keySet();
+                                        Log.d("GJSDFLKSD", "JLKSFJKLSDJFLSKDFJKS");
+                                    } else {
+//                                        Student has no result
+                                    }
+                                }
+                            });
+                        } else {
+//                            Student not yet enrolled
+                        }
+                    }
+                });
             }
         });
 

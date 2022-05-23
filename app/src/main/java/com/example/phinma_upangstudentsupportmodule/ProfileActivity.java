@@ -21,8 +21,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -43,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID;
+    private String userID, currAY;
     private Button logout;
     private Button changePassword;
     private Button update;
@@ -58,9 +60,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        progressDialog = ProgressDialog.show(ProfileActivity.this, null, null);
-        progressDialog.setContentView(new ProgressBar(ProfileActivity.this));
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        progressDialog = ProgressDialog.show(ProfileActivity.this, null, null);
+//        progressDialog.setContentView(new ProgressBar(ProfileActivity.this));
+//        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //initialize firebase variables to get name
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -81,15 +83,23 @@ public class ProfileActivity extends AppCompatActivity {
         update = (Button) findViewById(R.id.edit_info);
         profile_picture = (ImageView) findViewById(R.id.profile_picture);
 
-        StorageReference profileRef = storageReference.child("profileImages")
-                .child(userID)
-                .child("profile.jpg");
+//        StorageReference profileRef = storageReference.child("profileImages")
+//                .child(userID)
+//                .child("profile.jpg");
 
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profile_picture);
-            }
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).into(profile_picture);
+//            }
+//        });
+
+        FirebaseDatabase.getInstance().getReference("system/current").get().addOnCompleteListener(task -> {
+            currAY = task.getResult().getValue().toString();
+
+            FirebaseDatabase.getInstance().getReference("data/"+currAY+"/student/"+userID+"/section").get().addOnCompleteListener(task1 -> {
+                sectionTextView.setText(task.getResult().getValue().toString());
+            });
         });
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -110,12 +120,11 @@ public class ProfileActivity extends AppCompatActivity {
                     fullNameTextView.setText(firstName + " " + middleName + " " + lastName);
                     studentNumberTextView.setText(studentNumber);
                     emailTextView.setText(email);
-                    sectionTextView.setText(section);
                     contactNumberTextView.setText(contactNumber);
                     departmentTextView.setText(department);
                 }
 
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
             }
 
             @Override

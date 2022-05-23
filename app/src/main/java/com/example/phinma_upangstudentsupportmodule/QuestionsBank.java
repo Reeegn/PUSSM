@@ -8,7 +8,7 @@ public class QuestionsBank {
     private static List<QuestionsList> physicalAssessment() {
 
         final List<QuestionsList> questionsLists = new ArrayList<>();
-
+//        DEBUG: Questions should follow ALWAYS, OFTEN, SOMETIMES, OCCASIONALLY, NEVER
         //Create object of QuestionsList class and pass a questions along with options and answer
         final QuestionsList question1 = new QuestionsList("Are you having trouble breathing?", "Yes", "No", "Sometimes", "Not At All", "");
         final QuestionsList question2 = new QuestionsList("Do you have persistent pain or pressure in the chest?", "Yes", "No", "Sometimes", "Not At All", "");

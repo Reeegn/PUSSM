@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,11 +80,14 @@ public class AssessmentActivity extends AppCompatActivity {
         option4 = findViewById(R.id.option4);
         nextBtn = findViewById(R.id.nextBtn);
 
+        // DEBUG: The data transferred is a static "physical". Make it dynamic by using radio buttons or selection.
         //Get test name from MainActivity via Intent
         final String getSelectedTestName = getIntent().getStringExtra("selectedTest");
 
         //Set test name to TextView
         selectedTestName.setText(getSelectedTestName);
+
+        Log.d("AssessmentAct(89): gSTN", getSelectedTestName);
 
         /*
         //Get questions from Firebase Database according to the selectedTestName and assign questionsLists ArrayList
@@ -272,6 +276,7 @@ public class AssessmentActivity extends AppCompatActivity {
         }
 
         if ((currentQuestionPosition < questionsLists.size())) {
+//            DEVLOG: DO ADDITION COMPUTATION HERE
             selectedOptionByUser = "";
 
             option1.setBackgroundResource(R.drawable.round_back_white_stroke10);
@@ -294,6 +299,7 @@ public class AssessmentActivity extends AppCompatActivity {
             option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
         }
         else {
+//            DEVLOG: COMPUTE AVERAGE FOR TEST AND PASS AS INTENT
             Intent intent = new Intent(AssessmentActivity.this, AssessmentResults.class);
             startActivity(intent);
 
