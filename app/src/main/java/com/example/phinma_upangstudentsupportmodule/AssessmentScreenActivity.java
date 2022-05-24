@@ -31,6 +31,7 @@ public class AssessmentScreenActivity extends AppCompatActivity {
         final LinearLayout mental = findViewById(R.id.mentalLayout);
 
          */
+
         final Button startBtn = findViewById(R.id.startAssessmentBtn);
 
         /*
@@ -69,22 +70,21 @@ public class AssessmentScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                selectedTestName = "physical";
-
                 /* if user has not selected any topic yet then show a Toast message
                 selectedTestName will be empty or default value ("") if user has not selected any topic yet */
-                if(selectedTestName.isEmpty()){
-                    Toast.makeText(AssessmentScreenActivity.this, "Please select assessment", Toast.LENGTH_SHORT).show();
-                }
-                else{
+//                if(selectedTestName.isEmpty()){
+//                    Toast.makeText(AssessmentScreenActivity.this, "Please select assessment", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
 
                     //Create an object of Intent to open assessment questions screen
                     Intent intent = new Intent(AssessmentScreenActivity.this, AssessmentActivity.class);
 
-                    //put user entered name and selected test name to intent for use in the next activity
-                    intent.putExtra("selectedTest", selectedTestName);
+                    //put user entered name and selected test name to intent for use in the next activity;
+//                DEVLOG: The test/assessment always starts at physical so I hard-coded it to pass physical as the initial SelectedTest
+                    intent.putExtra("selectedTest", "physical");
                     startActivity(intent);
-                }
+//                }
             }
         });
 

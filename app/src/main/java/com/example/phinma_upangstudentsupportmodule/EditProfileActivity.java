@@ -45,23 +45,23 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID;
+    private String userID, currAY;
     private Button update;
     private Button changePicture;
     private ImageView profilePicture;
 
     StorageReference storageReference;
 
-    private ProgressDialog progressDialog;
+//    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        progressDialog = ProgressDialog.show(EditProfileActivity.this, null, null);
-        progressDialog.setContentView(new ProgressBar(EditProfileActivity.this));
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        progressDialog = ProgressDialog.show(EditProfileActivity.this, null, null);
+//        progressDialog.setContentView(new ProgressBar(EditProfileActivity.this));
+//        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //initialize firebase variables to get name
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -73,13 +73,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 .child(userID)
                 .child("profile.jpg");
 
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profilePicture);
-                progressDialog.dismiss();
-            }
-        });
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).into(profilePicture);
+//                progressDialog.dismiss();
+//            }
+//        });
 
         //Welcome message
         final TextView fullNameTextView = (TextView) findViewById(R.id.full_name);
@@ -107,6 +107,15 @@ public class EditProfileActivity extends AppCompatActivity {
                     String section = userProfile.section;
                     String contactNumber = userProfile.contact;
                     String department = userProfile.department;
+
+//                    Get section
+                    FirebaseDatabase.getInstance().getReference("system/current").get().addOnCompleteListener(task -> {
+                        currAY = task.getResult().getValue().toString();
+
+                        FirebaseDatabase.getInstance().getReference("data/"+currAY+"/student/"+userID+"/section").get().addOnCompleteListener(task1 -> {
+                            sectionTextView.setText(task.getResult().getValue().toString());
+                        });
+                    });
 
                     fullNameTextView.setText(firstName + " " + middleName + " " + lastName);
                     studentNumberTextView.setText(studentNumber);
@@ -145,48 +154,48 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000) {
-            if (resultCode == Activity.RESULT_OK){
-                Uri imageUri = data.getData();
-                //profilePicture.setImageURI(imageUri);
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1000) {
+//            if (resultCode == Activity.RESULT_OK){
+//                Uri imageUri = data.getData();
+//                //profilePicture.setImageURI(imageUri);
+//
+////                uploadImageToFirebase(imageUri);
+//            }
+//        }
+//    }
 
-                uploadImageToFirebase(imageUri);
-            }
-        }
-    }
-
-    private void uploadImageToFirebase(Uri imageUri) {
-
-        progressDialog = ProgressDialog.show(EditProfileActivity.this, null, null);
-        progressDialog.setContentView(new ProgressBar(EditProfileActivity.this));
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        StorageReference fileRef = storageReference.child("profileImages")
-                .child(userID)
-                .child("profile.jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profilePicture);
-                        Toast.makeText(EditProfileActivity.this, "Picture has been updated", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditProfileActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        });
-    }
+//    private void uploadImageToFirebase(Uri imageUri) {
+//
+////        progressDialog = ProgressDialog.show(EditProfileActivity.this, null, null);
+////        progressDialog.setContentView(new ProgressBar(EditProfileActivity.this));
+////        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        StorageReference fileRef = storageReference.child("profileImages")
+//                .child(userID)
+//                .child("profile.jpg");
+//        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//                        Picasso.get().load(uri).into(profilePicture);
+//                        Toast.makeText(EditProfileActivity.this, "Picture has been updated", Toast.LENGTH_SHORT).show();
+//                        progressDialog.dismiss();
+//                    }
+//                });
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(EditProfileActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
+//                progressDialog.dismiss();
+//            }
+//        });
+//    }
 
     @Override
     public void onBackPressed() {
