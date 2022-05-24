@@ -35,8 +35,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -109,20 +112,39 @@ public class MainActivity extends AppCompatActivity {
             if(task.isComplete()) {
                 AY = task.getResult().getValue().toString();
                 rootReference.child("data/"+AY+"/student/"+userID).get().addOnCompleteListener(task1 -> {
-                    if(task.isComplete()) {
-                        if (task.getResult().child("subject").exists()) {
-                            String subj = task.getResult().child("subject").getValue().toString();
-                            String sect = task.getResult().child("section").getValue().toString();
+                    if(task1.isComplete()) {
+                        if (task1.getResult().hasChild("subject")) {
+                            String subj = task1.getResult().child("subject").getValue().toString();
+                            String sect = task1.getResult().child("section").getValue().toString();
 
-                            Log.d("HELP ME", subj + sect);
-
-//                        TODO: Check if result pool is ok or needs plural.
                             rootReference.child("data/" + AY + "/studentList/" + subj + "/" + sect + "/" + userID + "/result").limitToLast(1).get().addOnCompleteListener(task2 -> {
-                                if (task.isComplete()) {
-                                    if (task.getResult().exists()) {
-                                        HashMap<String, String> result = (HashMap<String, String>) task.getResult().getChildren();
-                                        result.keySet();
-                                        Log.d("GJSDFLKSD", "JLKSFJKLSDJFLSKDFJKS");
+                                if (task2.isComplete()) {
+                                    if (task2.getResult().exists()) {
+                                        Map<String, String> data = (Map<String, String>) task2.getResult().getValue();
+                                        for (String v:data.keySet()) {
+                                            rootReference.child("data/" + AY+ "/result/"+v).get().addOnCompleteListener(task3 -> {
+                                                final TextView textview_date = (TextView) findViewById(R.id.dashboard_date);
+                                                final TextView textview_physical = (TextView) findViewById(R.id.tv_progress_physical);
+                                                final TextView textview_mental = (TextView) findViewById(R.id.tv_progress_mental);
+                                                final TextView textview_overall = (TextView) findViewById(R.id.tv_progress_overall);
+                                                final ProgressBar progress_physical = (ProgressBar) findViewById(R.id.pb_physical);
+                                                final ProgressBar progress_mental = (ProgressBar) findViewById(R.id.pb_mental);
+                                                final ProgressBar progress_overall = (ProgressBar) findViewById(R.id.pb_overall);
+
+                                                Timestamp t = new Timestamp(Long.valueOf(v));
+                                                Date d = new Date(t.getTime());
+
+                                                textview_date.setText(d.toString());
+                                                textview_physical.setText(task3.getResult().child("physical").getValue().toString());
+                                                textview_mental.setText(task3.getResult().child("mental").getValue().toString());
+                                                textview_overall.setText(task3.getResult().child("total").getValue().toString());
+                                                progress_physical.setProgress(Integer.parseInt(task3.getResult().child("physical").getValue().toString()));
+                                                progress_mental.setProgress(Integer.parseInt(task3.getResult().child("mental").getValue().toString()));
+                                                progress_overall.setProgress(Integer.parseInt(task3.getResult().child("total").getValue().toString()));
+                                            });
+                                        }
+//                                        HashMap<String, String> result = (HashMap<String, String>) task.getResult().getChildren();
+//                                        Log.d("GJSDFLKSD", result.keySet().toString());
                                     } else {
 //                                        Student has no result
                                     }
@@ -136,46 +158,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final TextView textview_date = (TextView) findViewById(R.id.dashboard_date);
-        final TextView textview_physical = (TextView) findViewById(R.id.tv_progress_physical);
-        final TextView textview_mental = (TextView) findViewById(R.id.tv_progress_mental);
-        final TextView textview_overall = (TextView) findViewById(R.id.tv_progress_overall);
-        final ProgressBar progress_physical = (ProgressBar) findViewById(R.id.pb_physical);
-        final ProgressBar progress_mental = (ProgressBar) findViewById(R.id.pb_mental);
-        final ProgressBar progress_overall = (ProgressBar) findViewById(R.id.pb_overall);
+//        DatabaseReference result_ref = FirebaseDatabase.getInstance().getReference("users").child(userID).child("result");
 
-        DatabaseReference result_ref = FirebaseDatabase.getInstance().getReference("users").child(userID).child("result");
-
-        result_ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-
-                for (DataSnapshot snapshot : datasnapshot.getChildren()){
-                    String date = snapshot.child("date").getValue().toString();
-                    String mental = snapshot.child("mental").getValue().toString();
-                    String physical = snapshot.child("physical").getValue().toString();
-                    String overall = snapshot.child("overall").getValue().toString();
-
-                    String fMental = mental + "%";
-                    String fPhysical = physical + "%";
-                    String fOverall = overall + "%";
-
-                    textview_date.setText(date);
-                    textview_mental.setText(fMental);
-                    textview_physical.setText(fPhysical);
-                    textview_overall.setText(fOverall);
-                    progress_mental.setProgress(Integer.parseInt(mental));
-                    progress_physical.setProgress(Integer.parseInt(physical));
-                    progress_overall.setProgress(Integer.parseInt(overall));
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        result_ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+//
+//                for (DataSnapshot snapshot : datasnapshot.getChildren()){
+//                    String date = snapshot.child("date").getValue().toString();
+//                    String mental = snapshot.child("mental").getValue().toString();
+//                    String physical = snapshot.child("physical").getValue().toString();
+//                    String overall = snapshot.child("overall").getValue().toString();
+//
+//                    String fMental = mental + "%";
+//                    String fPhysical = physical + "%";
+//                    String fOverall = overall + "%";
+//
+//                    textview_date.setText(date);
+//                    textview_mental.setText(fMental);
+//                    textview_physical.setText(fPhysical);
+//                    textview_overall.setText(fOverall);
+//                    progress_mental.setProgress(Integer.parseInt(mental));
+//                    progress_physical.setProgress(Integer.parseInt(physical));
+//                    progress_overall.setProgress(Integer.parseInt(overall));
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
 

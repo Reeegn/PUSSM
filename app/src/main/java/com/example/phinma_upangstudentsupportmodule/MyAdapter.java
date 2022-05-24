@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     Context context;
 
-    ArrayList<User> list;
+    HashMap<String, HashMap<String, String>> data;
 
-    public MyAdapter(Context context, ArrayList<User> list) {
+    public MyAdapter(Context context, HashMap<String, HashMap<String, String>> list) {
         this.context = context;
-        this.list = list;
+        this.data = list;
     }
 
     @NonNull
@@ -33,21 +34,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        String key = (String) (data.keySet().toArray())[position];
 
-        User user = list.get(position);
-        holder.date.setText(user.getDate());
-        holder.mental.setText(user.getMental() + "%");
-        holder.physical.setText(user.getPhysical() + "%");
-        holder.overall.setText(user.getOverall() + "%");
-        holder.progress_mental.setProgress(Integer.parseInt(user.getMental()));
-        holder.progress_physical.setProgress(Integer.parseInt(user.getPhysical()));
-        holder.progress_overall.setProgress(Integer.parseInt(user.getOverall()));
+        holder.date.setText(data.get(key).get("date"));
+        holder.mental.setText(data.get(key).get("mental"));
+        holder.physical.setText(data.get(key).get("physical"));
+        holder.overall.setText(data.get(key).get("overall"));
+        holder.progress_mental.setProgress(Integer.parseInt(data.get(key).get("mental")));
+        holder.progress_physical.setProgress(Integer.parseInt(data.get(key).get("physical")));
+        holder.progress_overall.setProgress(Integer.parseInt(data.get(key).get("overall")));
 
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return data.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
