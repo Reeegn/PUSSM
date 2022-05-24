@@ -143,8 +143,8 @@ public class HistoryActivity extends AppCompatActivity {
                                                 HashMap<String, String> innerData = new HashMap<>();
                                                 innerData.put("date", new Date(t.getTime()).toString());
                                                 innerData.put("physical",task3.getResult().child("physical").getValue().toString());
-                                                innerData.put("mental",task3.getResult().child("physical").getValue().toString());
-                                                innerData.put("overall",task3.getResult().child("physical").getValue().toString());
+                                                innerData.put("mental",task3.getResult().child("mental").getValue().toString());
+                                                innerData.put("overall",task3.getResult().child("total").getValue().toString());
                                                 data1.put(v, innerData);
 
                                                 if(data.size() == data1.size()) {
